@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>Videos - dhuruv's Portfolio</title>
+    <style>
+        /* Override navigation styles for this page */
+        header nav a {
+            color: white !important;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+
+        header nav a:hover,
+        header nav a.active {
+            opacity: 1;
+            color: white !important;
+        }
+
+        header nav a::before {
+            background: white;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --background-color: #f8fafc;
+            --text-color: #1e293b;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+
+        .video-container {
+            padding: 0 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .video-header {
+            text-align: center;
+            margin-bottom: 4rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .video-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .video-header p {
+            color: var(--light-text);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .tab-container {
+            background: var(--secondary-bg);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px var(--shadow-color);
+            border: 1px solid rgba(124, 58, 237, 0.1);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease forwards 0.2s;
+        }
+
+        .tab-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            justify-content: center;
+        }
+
+        .tab-button {
+            padding: 0.8rem 1.5rem;
+            background: var(--background-color);
+            color: var(--text-color);
+            border: 1px solid rgba(124, 58, 237, 0.2);
+            border-radius: 12px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tab-button::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: var(--gradient);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s ease, height 0.3s ease;
+            z-index: 0;
+            opacity: 0;
+        }
+
+        .tab-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px var(--shadow-color);
+            border-color: var(--primary-color);
+        }
+
+        .tab-button.active {
+            background: var(--gradient);
+            color: white;
+            border: none;
+        }
+
+        .tab-content {
+            display: none;
+            padding: 2rem;
+            background: var(--background-color);
+            border-radius: 15px;
+            border: 1px solid rgba(124, 58, 237, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+            max-width: 100%;
+            background: #000; /* Add a black background */
+            margin-bottom: 2rem;
+            border-radius: 15px;
+        }
+        
+        .video-wrapper iframe {
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .video-info {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: var(--secondary-bg);
+            border-radius: 15px;
+            border: 1px solid rgba(124, 58, 237, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .video-info:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px var(--shadow-color);
+            border-color: var(--primary-color);
+        }
+
+        .video-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .video-description {
+            color: var(--light-text);
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        .video-meta {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(124, 58, 237, 0.1);
+            color: var(--light-text);
+        }
+
+        .video-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .video-meta i {
+            color: var(--primary-color);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .video-container {
+                padding: 1rem;
+            }
+
+            .video-header h1 {
+                font-size: 2rem;
+            }
+
+            .tab-button {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .video-title {
+                font-size: 1.5rem;
+            }
+
+            .video-description {
+                font-size: 1rem;
+            }
+
+            .video-meta {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+        }
+
+        /* Add these styles to your existing CSS */
+        .download-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .download-link:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .video-meta {
+            margin-top: 1.5rem;
+            display: flex;
+            justify-content: flex-end;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="#" class="logo">Dhuruv</a>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="Skills.html">Skills</a>
+            <a href="Education.html">Education</a>
+            <a href="Experience.html">Experience</a>
+            <a href="videos.html" class="active">Videos</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+    </header>
+
+    <div class="video-container section-padding">
+        <div class="video-header">
+            <h1>Project Journey</h1>
+            <p>A collection of project videos and presentations.</p>
+        </div>
+        
+        <div class="tab-container">
+            <div class="tab-buttons">
+                <button class="tab-button active" onclick="openTab(event, 'introduction')">Introduction</button>
+                <button class="tab-button" onclick="openTab(event, 'feedback')">Feedback</button>
+            </div>
+
+            <div id="introduction" class="tab-content active">
+                <div class="video-wrapper">
+                    <iframe 
+                        src="https://drive.google.com/file/d/1quKI46vCUeZxIm3iUkTc1C_6Xeigx9Tk/view?usp=drivesdk"
+                        allow="autoplay"
+                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <div class="video-info">
+                    <h2 class="video-title">Introduction Video</h2>
+                    <p class="video-description">Hello, my name is Dhuruv Chaudhary, and I’m currently pursuing a B.Tech in Computer Science and Engineering. I have a deep passion for web development, with a particular interest in creating interactive, intuitive, and engaging user experiences. I enjoy working on both the frontend and backend, and I’m constantly exploring new tools and technologies to enhance my development skills.
+
+                        Over the course of my academic journey, I’ve worked on several projects that reflect both my creativity and technical ability. Two of my major projects include:
+                        
+                        Clean Bot 3000 – a grid-based logic game where players program a cleaning robot to complete levels, combining elements of coding, problem-solving, and game design.
+                        
+                        Draw and Guess Game – a real-time multiplayer web game inspired by platforms like Skribbl.io, where players take turns drawing and guessing words, requiring smooth web socket communication and responsive UI.
+                        
+                        Through these projects, I’ve gained valuable experience in JavaScript, HTML, CSS, Python, and frameworks for real-time web development. I take pride in writing clean, efficient code and enjoy working collaboratively on innovative ideas.
+                        
+                        I’m highly motivated to continue learning and building, with the goal of becoming a well-rounded developer who can contribute meaningfully to the tech industry.</p>
+                    <div class="video-meta">
+                        <a href="https://drive.google.com/file/d/1quKI46vCUeZxIm3iUkTc1C_6Xeigx9Tk/view?usp=drivesdk" target="_blank" class="download-link">
+                            <i class="fas fa-download"></i> Download Video
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div id="feedback" class="tab-content">
+                <div class="video-wrapper">
+                    <iframe 
+                        src="https://drive.google.com/file/d/1pdiYKn7OXZEQlQ9k4hqM-hq3Bvt5SITu/view?usp=drive_link"
+                        allow="autoplay"
+                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <div class="video-info">
+                    <h2 class="video-title">Feedback Video</h2>
+                    <p class="video-description">In this final video, I shared my complete journey from Week 1 to Week 10 of our Soft Skills training. I discussed how I improved my self-introduction, learned to write a professional resume, and built confidence through group discussions and mock interviews.
+
+                        Each week taught me something new – from speaking in just 25 words to handling interview questions with confidence. Group Discussions helped me think critically and respect others' opinions.
+                        
+                        I gave a special thanks to our mam, who made every session fun, helpful, and full of learning. Her teaching style was very friendly and encouraging. Thank you mam for guiding us so well!</p>
+                    <div class="video-meta">
+                        <a href="https://drive.google.com/file/d/1pdiYKn7OXZEQlQ9k4hqM-hq3Bvt5SITu/view?usp=drive_link" target="_blank" class="download-link">
+                            <i class="fas fa-download"></i> Download Video
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openTab(evt, videoId) {
+            // Hide all tab contents
+            var tabContents = document.getElementsByClassName("tab-content");
+            for (var i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove("active");
+            }
+
+            // Remove active class from all tab buttons
+            var tabButtons = document.getElementsByClassName("tab-button");
+            for (var i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove("active");
+            }
+
+            // Show the selected tab content and mark button as active
+            document.getElementById(videoId).classList.add("active");
+            evt.currentTarget.classList.add("active");
+
+            // Pause all videos when switching tabs
+            var videos = document.getElementsByTagName("iframe");
+            for (var i = 0; i < videos.length; i++) {
+                videos[i].contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
+            }
+        }
+    </script>
+</body>
+</html> 
